@@ -19,7 +19,7 @@ public class ThreadPoolDemo1 {
             // 10个顾客请求
             for (int i = 1; i <= 20; i++) {
                 // 执行
-                threadPool3.execute(() -> {
+                threadPool1.execute(() -> {
                     System.out.println(Thread.currentThread().getName() + " 办理业务");
                 });
             }
@@ -27,7 +27,7 @@ public class ThreadPoolDemo1 {
             e.printStackTrace();
         } finally {
             // 关闭
-            threadPool3.shutdown();
+            threadPool1.shutdown();
         }
 
     }
