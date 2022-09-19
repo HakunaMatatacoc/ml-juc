@@ -1,7 +1,6 @@
 package com.my7.pool;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 // 演示线程池三种常用分类
 public class ThreadPoolDemo1 {
@@ -15,11 +14,19 @@ public class ThreadPoolDemo1 {
         // 一池可扩容线程
         ExecutorService threadPool3 = Executors.newCachedThreadPool();
 
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2,
+                5,
+                2L,
+                TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(3),
+                Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.AbortPolicy());
+
         try {
             // 10个顾客请求
-            for (int i = 1; i <= 20; i++) {
+            for (int i = 1; i <= 10; i++) {
                 // 执行
-                threadPool1.execute(() -> {
+                threadPoolExecutor.execute(() -> {
                     System.out.println(Thread.currentThread().getName() + " 办理业务");
                 });
             }
@@ -27,7 +34,7 @@ public class ThreadPoolDemo1 {
             e.printStackTrace();
         } finally {
             // 关闭
-            threadPool1.shutdown();
+            threadPoolExecutor.shutdown();
         }
 
     }
